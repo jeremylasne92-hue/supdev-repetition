@@ -5,5 +5,6 @@ window.FONCTIONNALITES = [
   'cartes-recto-verso',
   'expliquer-avec-ses-mots',
   'quiz-du-soir',
+  'revision-espacee',
   'proposer',
 ];
