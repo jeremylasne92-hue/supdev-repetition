@@ -6,5 +6,6 @@ window.FONCTIONNALITES = [
   'expliquer-avec-ses-mots',
   'quiz-du-soir',
   'revision-espacee',
+  'minuteur-pomodoro',
   'proposer',
 ];
