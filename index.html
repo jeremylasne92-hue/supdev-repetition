@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Outil d'apprentissage</title>
+  <meta name="description" content="Outil d'apprentissage construit en classe avec un agent IA.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="entete">
+    <a href="#accueil" class="marque" id="nom-outil">Outil d'apprentissage</a>
+  </header>
+  <main id="contenu" tabindex="-1">
+    <p class="chargement">Chargement…</p>
+  </main>
+  <footer class="pied" id="pied"></footer>
+  <nav class="barre" id="barre" aria-label="Raccourcis"></nav>
+  <noscript>Cet outil a besoin de JavaScript.</noscript>
+  <script>
+    // Chargeur : lit version.txt sans cache, puis charge chaque fichier avec ce numéro.
+    // Ainsi, une fonctionnalité publiée apparaît dès que l'étudiant recharge la page.
+    (async function () {
+      let version = String(Date.now());
+      try {
+        const r = await fetch('version.txt?t=' + Date.now(), { cache: 'no-store' });
+        if (r.ok) version = (await r.text()).trim();
+      } catch (e) { /* hors ligne : on garde l'horodatage */ }
+      const style = document.createElement('link');
+      style.rel = 'stylesheet';
+      style.href = 'style.css?v=' + version;
+      document.head.appendChild(style);
+      const charger = (src) => new Promise((ok, ko) => {
+        const s = document.createElement('script');
+        s.src = src + '?v=' + version;
+        s.onload = ok;
+        s.onerror = () => ko(new Error(src));
+        document.body.appendChild(s);
+      });
+      try {
+        await charger('config.js');
+        await charger('noyau.js');
+        await charger('fonctionnalites/registre.js');
+        for (const nom of window.FONCTIONNALITES || []) {
+          try { await charger('fonctionnalites/' + nom + '.js'); }
+          catch (e) { console.error(e); window.Outil.signalerErreur(nom); }
+        }
+        window.Outil.demarrer();
+      } catch (e) {
+        console.error(e);
+        document.getElementById('contenu').textContent = 'Le chargement a échoué. Rechargez la page.';
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+name: Mini PRD
+description: Proposer une fonctionnalité pour l'outil de la classe
+title: "[Mini PRD] "
+labels: ["mini-prd"]
+body:
+  - type: markdown
+    attributes:
+      value: "N'écrivez ni votre nom ni aucune donnée personnelle : ce ticket est public."
+  - type: input
+    id: nom
+    attributes:
+      label: Nom de la fonctionnalité
+    validations:
+      required: true
+  - type: textarea
+    id: probleme
+    attributes:
+      label: "Le problème : qu'est-ce qui vous gêne quand vous révisez ?"
+    validations:
+      required: true
+  - type: input
+    id: pour-qui
+    attributes:
+      label: Pour qui ?
+    validations:
+      required: true
+  - type: textarea
+    id: etapes
+    attributes:
+      label: Ce qu'elle fait, étape par étape
+    validations:
+      required: true
+  - type: textarea
+    id: exemple
+    attributes:
+      label: Un exemple concret d'utilisation
+    validations:
+      required: true
+  - type: textarea
+    id: criteres
+    attributes:
+      label: Comment saurez-vous qu'elle marche ?
+      description: Deux ou trois critères que vous pourrez vérifier vous-même
+    validations:
+      required: true
+  - type: textarea
+    id: interdits
+    attributes:
+      label: Ce qu'elle ne doit pas faire
+  - type: checkboxes
+    id: principes
+    attributes:
+      label: Quel principe des sciences cognitives utilise-t-elle ?
+      options:
+        - label: Se tester (récupération active)
+        - label: Espacer les révisions dans le temps
+        - label: Mélanger les sujets (entrelacement)
+        - label: Expliquer avec ses mots
+        - label: Associer mots et images

@@ -1,0 +1,205 @@
+/* Apparence de l'outil : pensée d'abord pour le téléphone.
+   Les couleurs et la police viennent de config.js (variables ci-dessous). */
+:root {
+  --accent: #2f5bd3;
+  --fond: #f4f6fb;
+  --texte: #18202f;
+  --carte: #ffffff;
+  --doux: color-mix(in srgb, var(--texte) 62%, var(--fond));
+  --trait: color-mix(in srgb, var(--texte) 14%, var(--fond));
+  --accent-pale: color-mix(in srgb, var(--accent) 12%, var(--carte));
+  --succes: #1e7a46;
+  --alerte: #b3261e;
+  --police: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --rayon: 12px;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  font-family: var(--police);
+  font-size: 17px;
+  line-height: 1.5;
+  background: var(--fond);
+  color: var(--texte);
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+}
+
+a { color: var(--accent); }
+
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--carte);
+  border-bottom: 1px solid var(--trait);
+  padding: 12px max(16px, env(safe-area-inset-left, 0px));
+}
+.marque { font-weight: 700; text-decoration: none; color: var(--texte); font-size: 1.05rem; }
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px max(16px, env(safe-area-inset-left, 0px)) 24px;
+  outline: none;
+}
+
+h1 { font-size: 1.6rem; line-height: 1.2; margin: 8px 0 16px; }
+h2 { font-size: 1.2rem; margin: 24px 0 8px; }
+
+.chargement, .aide { color: var(--doux); }
+.erreur { color: var(--alerte); font-weight: 600; }
+.retour { display: inline-block; margin: 4px 0; text-decoration: none; font-weight: 600; }
+
+.bandeau {
+  background: var(--accent);
+  color: #fff;
+  border-radius: var(--rayon);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.bandeau h1 { margin: 0 0 4px; }
+.bandeau p { margin: 0; opacity: .92; }
+
+.etapes { padding-left: 1.2em; color: var(--doux); }
+.etapes li { margin-bottom: 4px; }
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.tuile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 132px;
+  padding: 14px;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  color: var(--texte);
+  text-decoration: none;
+}
+.tuile:hover, .tuile:focus-visible { border-color: var(--accent); }
+.tuile .icone { font-size: 1.8rem; }
+.tuile span:not(.icone) { color: var(--doux); font-size: .9rem; }
+.tuile small { color: var(--accent); font-size: .78rem; margin-top: auto; }
+
+.carte {
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  padding: 16px;
+  margin: 12px 0;
+}
+
+.rangee { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+
+.bouton {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  padding: 12px 18px;
+  min-height: 44px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.bouton.secondaire { background: var(--accent-pale); color: var(--accent); }
+.bouton.danger { background: transparent; color: var(--alerte); border: 1px solid currentColor; }
+.bouton:disabled { opacity: .5; cursor: default; }
+.lien { background: none; border: 0; color: var(--accent); font: inherit; padding: 8px 0; cursor: pointer; text-decoration: underline; }
+
+.champ { display: flex; flex-direction: column; gap: 4px; margin: 12px 0; font-weight: 600; }
+input, textarea, select {
+  font: inherit;
+  font-weight: 400;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--trait);
+  border-radius: 8px;
+  background: var(--carte);
+  color: var(--texte);
+}
+textarea { resize: vertical; min-height: 120px; }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 2px; }
+
+.liste { list-style: none; padding: 0; margin: 0; }
+.liste li { padding: 10px 0; border-bottom: 1px solid var(--trait); }
+
+.fenetre {
+  width: min(560px, calc(100vw - 24px));
+  border: 0;
+  border-radius: var(--rayon);
+  padding: 20px;
+  background: var(--carte);
+  color: var(--texte);
+}
+.fenetre::backdrop { background: rgba(10, 14, 25, .55); }
+.fenetre h2 { margin-top: 0; }
+.consigne { min-height: 140px; font-size: .9rem; }
+
+#notification {
+  position: fixed;
+  left: 50%;
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 20px);
+  background: var(--texte);
+  color: var(--fond);
+  padding: 10px 16px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s, transform .2s;
+  z-index: 20;
+  max-width: calc(100vw - 32px);
+}
+#notification.visible { opacity: 1; transform: translate(-50%, 0); }
+
+.pied {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 16px 24px;
+  color: var(--doux);
+  font-size: .85rem;
+}
+
+.barre {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-around;
+  background: var(--carte);
+  border-top: 1px solid var(--trait);
+  padding: 6px max(8px, env(safe-area-inset-left, 0px)) calc(6px + env(safe-area-inset-bottom, 0px));
+}
+.barre a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: .78rem;
+  color: var(--doux);
+  text-decoration: none;
+  padding: 4px;
+}
+.barre a span { font-size: 1.3rem; }
+.barre a[aria-current="page"] { color: var(--accent); font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
