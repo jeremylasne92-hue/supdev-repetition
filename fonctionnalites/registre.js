@@ -4,5 +4,6 @@ window.FONCTIONNALITES = [
   'mes-cours',
   'cartes-recto-verso',
   'expliquer-avec-ses-mots',
+  'quiz-du-soir',
   'proposer',
 ];
